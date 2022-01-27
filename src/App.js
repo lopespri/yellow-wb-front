@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import logo from './logo.png';
 import userIcon from './user.png';
 import premiumIcon from './premium.png';
-
 import Footer from './Footer';
+
+import './index.css';
 
 function App() {
   const [u, setU] = useState();
