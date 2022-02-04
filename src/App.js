@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import logo from './logo.png';
 import userIcon from './user.png';
 import premiumIcon from './premium.png';
-import Footer from './Footer';
 
 import './index.css';
 
@@ -10,14 +9,27 @@ function App() {
   const [u, setU] = useState();
 
   useEffect(() => {
+    /*
+    Exemplo de resposta da API:
+
+    {
+      name: 'Alice Meira Gonçalves',
+      email: 'alicemeira@gmail.com',
+      plan: {
+        type: 'premium',
+        startDate: '2022-01-12T16:51:00Z',
+        cost: 400.00,
+      }
+    }
+    */
     fetch('https://www.sanar-yellow.com/user').then((d) => {
       setU(d);
     });
-  }, [])
+  }, []);
 
   return (
     <div className="App">
-      <div>
+      <div className="search">
         <img src={logo} alt="" />
         <div>O que deseja pesquisar hoje?</div>
       </div>
@@ -31,12 +43,25 @@ function App() {
           </div>
           <div>
             <div style={{ fontWeight: 'bold', marginBottom: '15px' }}>Dados da assinatura</div>
-            <div style={{ fontWeight: 'bold', marginBottom: '10px' }}>{ u.planType ? <>Plano premium <img src={premiumIcon} /></> : <></>}</div>
-            <div style={{ fontSize: '12px', marginBottom: '10px' }}>Contratado em ${u.date}</div>
-            <div style={{ fontSize: '12px', marginBottom: '10px' }}>Valor total: R$ ${u.planCost}</div>
+            <div style={{ fontWeight: 'bold', marginBottom: '15px' }}>{ u.plan.type ? <>Plano Premium <img src={premiumIcon} /></> : <>Plano Simples</>}</div>
+            <div style={{ fontSize: '12px', marginBottom: '10px' }}>Contratado em {u.plan.startDate}</div>
+            <div style={{ fontSize: '12px', marginBottom: '10px' }}>Valor total: R$ {u.plan.cost}</div>
           </div>
         </div>
-        <Footer />
+
+        <div style={{ display: 'flex', gap: '40px', marginTop: '30px' }}>
+          <div style={{ fontWeight: 'bold' }}>Conheça o app</div>
+          <div>
+            <div style={{ cursor: 'pointer' }} onClick={() => window.location.href = 'https://www.sanarmed.com/'}>SANAR MED</div>
+            <div style={{ cursor: 'pointer' }} onClick={() => window.location.href = 'https://www.sanarmed.com/residenciamedica'}>SANAR RESIDÊNCIA MÉDICA</div>
+            <div style={{ cursor: 'pointer' }} onClick={() => window.location.href = 'hhttps://up.sanar.com.br/'}>SANAR UP</div>
+            <div style={{ cursor: 'pointer' }} onClick={() => window.location.href = 'https://pos.sanarmed.com/'}>SANAR PÓS</div>
+          </div>
+          <div>
+            <div style={{ cursor: 'pointer' }} onClick={() => window.location.href = 'https://www.sanarmed.com/termos'}>TERMOS DE USO</div>
+            <div style={{ cursor: 'pointer' }} onClick={() => window.location.href = 'https://www.sanarmed.com/privacidade'}>PRIVACIDADE</div>
+          </div>
+        </div>
       </div>
     </div>
   );
